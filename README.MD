@@ -10,10 +10,47 @@ gcc
 # git clone https://github.com/shanghai-edu/rmdb-lite.git
 cd rmdb-lite
 go get ./...
+chmod +x control
 ./control build
 ```
 ##### 二进制安装
+```
+wget https://github.com/shanghai-edu/rmdb-lite/releases/download/v0.1/rmdb-lite-0.1.tar.gz
+tar -xzvf rmdb-lite-0.1.tar.gz
+```
 
+#### 配置
+参照 `cfg.example.json`
+```
+{
+	"http": {
+		"listen": "0.0.0.0:18080"
+	},
+	"sqlite": "sqlite.db",
+	"access_control": [
+		{
+			"user": "read only on node",
+			"x-api-key": "3a1179104ae0188ed4a3c100b38343ff",
+			"role": 1
+		},
+		{
+			"user": "read only on node and node_detail",
+			"x-api-key": "bc055c13064927a670744e4459b86c80",
+			"role": 2
+		},
+		{
+			"user": "write role",
+			"x-api-key": "771261d709af69da179a330ed8f16fa1",
+			"role": 3
+		}
+	]
+}
+```
+#### 初始化
+导入数据
+```
+ ./rmdb-lite -i routers.csv
+```
 #### 运行
 ```
 # ./control -h
