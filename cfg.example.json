@@ -1,0 +1,23 @@
+{
+	"http": {
+        "listen": "0.0.0.0:18080"
+    },
+	"sqlite":"sqlite.db",
+	"access_control":[
+		{
+			"user":"read only on node",
+			"x-api-key":"3a1179104ae0188ed4a3c100b38343ff",
+			"role":1
+		},
+		{
+			"user":"read only on node and node_detail",
+			"x-api-key":"bc055c13064927a670744e4459b86c80",
+			"role":2
+		},
+		{
+			"user":"write role",
+			"x-api-key":"771261d709af69da179a330ed8f16fa1",
+			"role":3
+		}		
+	]
+}
