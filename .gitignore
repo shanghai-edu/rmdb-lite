@@ -1,0 +1,9 @@
+cfg.json
+*.exe
+*.db
+/var
+rmdb-lite
+/models/*.json
+/models/*.csv
+/models/*.db
+/controller/utils/*.json
