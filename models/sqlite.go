@@ -99,6 +99,7 @@ func ReadAllRouters() (routers []Router) {
 
 func ReadMultiRouters(ips []string) (routers []Router, failedList []string) {
 	db := g.Conn()
+	failedList = []string{}
 	for _, ip := range ips {
 		router := Router{}
 		db.Where("ip = ?", ip).First(&router)
@@ -108,7 +109,6 @@ func ReadMultiRouters(ips []string) (routers []Router, failedList []string) {
 			routers = append(routers, router)
 		}
 	}
-	log.Println(routers)
 	return
 }
 
