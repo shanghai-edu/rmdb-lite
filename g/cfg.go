@@ -7,12 +7,13 @@ import (
 
 	"sync"
 
-	"github.com/jinzhu/gorm"
 	"github.com/toolkits/file"
 )
 
 type GlobalConfig struct {
+	LogLevel      string      `json:"log_level"`
 	Sqlite        string      `json:"sqlite"`
+	Mysql         string      `json:"mysql"`
 	Http          *HttpConfig `json:"http"`
 	AccessControl *[]ACLUser  `json:"access_control"`
 }
@@ -25,26 +26,6 @@ type ACLUser struct {
 
 type HttpConfig struct {
 	Listen string `json:"listen"`
-}
-
-var dbp *gorm.DB
-
-func Conn() *gorm.DB {
-	return dbp
-}
-
-func InitDB() {
-	db, err := gorm.Open("sqlite3", Config().Sqlite)
-	if err != nil {
-		log.Fatalln("Init DB Connect Failed: ", err)
-	}
-	dbp = db
-	return
-}
-
-func CloseDB() (err error) {
-	err = dbp.Close()
-	return
 }
 
 var (

@@ -1,5 +1,6 @@
 cfg.json
 *.exe
+*.zip
 *.db
 /var
 rmdb-lite

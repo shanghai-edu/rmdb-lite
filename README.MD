@@ -1,5 +1,9 @@
 ### Router Manage DB lite —— 轻量级的路由器管理数据库
 
+#### DB 支持
+sqlite or mysql
+如果两个配置都存在，sqlite 优先
+如果使用 mysql，需要先创建数据库 rmdb（也可以换别的）并设置数据库编码为 utf8。
 #### 安装
 ##### 编译安装
 依赖：
@@ -15,18 +19,20 @@ chmod +x control
 ```
 ##### 二进制安装
 ```
-wget https://github.com/shanghai-edu/rmdb-lite/releases/download/v0.1/rmdb-lite-0.1.tar.gz
-tar -xzvf rmdb-lite-0.1.tar.gz
+wget https://github.com/shanghai-edu/rmdb-lite/releases/download/v0.1/rmdb-lite-0.2.0.tar.gz
+tar -xzvf rmdb-lite-0.2.0.tar.gz
 ```
 
 #### 配置
 参照 `cfg.example.json`
 ```
 {
+	"log_level":"info",
 	"http": {
 		"listen": "0.0.0.0:18080"
 	},
 	"sqlite": "sqlite.db",
+	"mysql":"root:password@tcp(127.0.0.1:3306)/rmdb?charset=utf8&parseTime=True&loc=Local",
 	"access_control": [
 		{
 			"user": "read only on node",
@@ -113,7 +119,7 @@ role = 2
 
 {"code":0,"message":"ok","version":"0.1","data":null}
 ```
-#### 性能
+#### 性能（sqlite)
 ##### 查询性能
 ```
 # ./wrk -t12 -c400 -d30s -H "X-API-KEY: 3a1179104ae0188ed4a3c100b38343ff" http://127.0.0.1:18080/api/v1/router?ip=192.25.209.100 

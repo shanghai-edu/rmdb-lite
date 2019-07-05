@@ -30,13 +30,13 @@ func main() {
 	g.ParseConfig(*cfg)
 
 	if *init != "" {
-		err := models.InitData(g.Config().Sqlite, *init)
+		err := models.InitData(*init)
 		if err != nil {
 			log.Fatalf("Init DB Failed: %s", err)
 		}
 		os.Exit(0)
 	}
-
+	g.InitLog(g.Config().LogLevel)
 	g.InitDB()
 
 	srv := controller.InitGin(g.Config().Http.Listen)

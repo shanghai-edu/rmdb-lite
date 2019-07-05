@@ -9,9 +9,16 @@ import (
 )
 
 func InitGin(listen string) (httpServer *http.Server) {
-	gin.SetMode(gin.ReleaseMode)
+	if g.Config().LogLevel == "debug" {
+		gin.SetMode(gin.DebugMode)
+	} else {
+		gin.SetMode(gin.ReleaseMode)
+	}
+
 	r := gin.New()
-	r.Use(gin.Logger())
+	if g.Config().LogLevel == "debug" {
+		r.Use(gin.Logger())
+	}
 	r.Use(gin.Recovery())
 	r.Use(CORS())
 
