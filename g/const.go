@@ -1,5 +1,6 @@
 package g
 
 const (
-	VERSION = "0.2.0"
+	//VERSION 版本号
+	VERSION = "0.2.1"
 )

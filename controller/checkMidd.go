@@ -8,23 +8,21 @@ import (
 )
 
 func readOnlyCheckMidd(c *gin.Context) {
-	x_api_key := c.Request.Header.Get("X-API-KEY")
-	user := utils.GetUserFromKey(x_api_key)
+	xAPIKey := c.Request.Header.Get("X-API-KEY")
+	user := utils.GetUserFromKey(xAPIKey)
 	if user.Role == 0 {
 		c.JSON(http.StatusUnauthorized, utils.ErrorRes(utils.InvalidAPIKEY))
 		c.Abort()
 		return
 	}
-	return
 }
 
 func adminCheckMidd(c *gin.Context) {
-	x_api_key := c.Request.Header.Get("X-API-KEY")
-	user := utils.GetUserFromKey(x_api_key)
+	xAPIKey := c.Request.Header.Get("X-API-KEY")
+	user := utils.GetUserFromKey(xAPIKey)
 	if user.Role != 3 {
 		c.JSON(http.StatusUnauthorized, utils.ErrorRes(utils.InvalidAPIKEY))
 		c.Abort()
 		return
 	}
-	return
 }

@@ -10,36 +10,42 @@ import (
 	"github.com/toolkits/file"
 )
 
+//GlobalConfig 全局配置
 type GlobalConfig struct {
 	LogLevel      string      `json:"log_level"`
 	Sqlite        string      `json:"sqlite"`
 	Mysql         string      `json:"mysql"`
-	Http          *HttpConfig `json:"http"`
+	HTTP          *HTTPConfig `json:"http"`
 	AccessControl *[]ACLUser  `json:"access_control"`
 }
 
+//ACLUser 用户的角色配置
 type ACLUser struct {
-	User      string `json:"user"`
-	X_API_KEY string `json:"x-api-key"`
-	Role      int64  `json:"role"`
+	User    string `json:"user"`
+	XAPIKEY string `json:"x-api-key"`
+	Role    int64  `json:"role"`
 }
 
-type HttpConfig struct {
+//HTTPConfig http 配置
+type HTTPConfig struct {
 	Listen string `json:"listen"`
 }
 
 var (
+	//ConfigFile 配置文件
 	ConfigFile string
 	config     *GlobalConfig
 	lock       = new(sync.RWMutex)
 )
 
+//Config 给其他包调用的配置加载方法，带锁
 func Config() *GlobalConfig {
 	lock.RLock()
 	defer lock.RUnlock()
 	return config
 }
 
+//ParseConfig 从配置文件加载配置
 func ParseConfig(cfg string) {
 	if cfg == "" {
 		log.Fatalln("use -c to specify configuration file")

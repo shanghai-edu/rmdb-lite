@@ -8,7 +8,7 @@ import (
 
 func init() {
 	g.ParseConfig("cfg.json")
-	err := InitData(g.Config().Sqlite, "routers.csv")
+	err := InitData("routers.csv")
 	if err != nil {
 		panic(err)
 	}

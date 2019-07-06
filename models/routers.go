@@ -8,18 +8,21 @@ import (
 	"github.com/shanghai-edu/rmdb-lite/g"
 )
 
+//ReadRouter 查询单个路由器
 func ReadRouter(ip string) (router Router) {
 	db := g.Conn()
 	db.Where("ip = ?", ip).First(&router)
 	return
 }
 
+//ReadAllRouters 查询所有路由器
 func ReadAllRouters() (routers []Router) {
 	db := g.Conn()
 	db.Find(&routers)
 	return
 }
 
+//ReadMultiRouters 查询多个路由器
 func ReadMultiRouters(ips []string) (routers []Router, failedList []string) {
 	db := g.Conn()
 	failedList = []string{}
@@ -35,6 +38,7 @@ func ReadMultiRouters(ips []string) (routers []Router, failedList []string) {
 	return
 }
 
+//UpdateRouter 更新路由器
 func UpdateRouter(newRouter Router) (err error) {
 	db := g.Conn()
 	router := Router{}
@@ -53,6 +57,7 @@ func UpdateRouter(newRouter Router) (err error) {
 	return
 }
 
+//DeleteRouter 删除路由器
 func DeleteRouter(ip string) (err error) {
 	db := g.Conn()
 	router := Router{}
@@ -68,6 +73,7 @@ func DeleteRouter(ip string) (err error) {
 	return
 }
 
+//CreateRouter 创建路由器
 func CreateRouter(newRouter Router) (err error) {
 	db := g.Conn()
 	router := Router{}

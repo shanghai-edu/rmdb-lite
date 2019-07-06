@@ -8,12 +8,14 @@ import (
 	"github.com/shanghai-edu/rmdb-lite/models"
 )
 
+//ResData 单条数据返回的数据结构
 type ResData struct {
 	IP         string `json:"ip"`
 	Node       string `json:"node"`
 	NodeDetail string `json:"node_detail"`
 }
 
+//MultiRouterRes 多条数据返回时的数据结构
 type MultiRouterRes struct {
 	Routers    []ResData `json:"routers"`
 	FailedList []string  `json:"failed_list"`
@@ -27,8 +29,8 @@ func getRouter(c *gin.Context) {
 		c.JSON(http.StatusNotFound, utils.ErrorRes(utils.RecordNotFound))
 		return
 	}
-	x_api_key := c.Request.Header.Get("X-API-KEY")
-	user := utils.GetUserFromKey(x_api_key)
+	xAPIKey := c.Request.Header.Get("X-API-KEY")
+	user := utils.GetUserFromKey(xAPIKey)
 	resData := &ResData{
 		IP:   router.IP,
 		Node: router.Node,
@@ -50,8 +52,8 @@ func getAllRouters(c *gin.Context) {
 		c.JSON(http.StatusNotFound, utils.ErrorRes(utils.RecordNotFound))
 		return
 	}
-	x_api_key := c.Request.Header.Get("X-API-KEY")
-	user := utils.GetUserFromKey(x_api_key)
+	xAPIKey := c.Request.Header.Get("X-API-KEY")
+	user := utils.GetUserFromKey(xAPIKey)
 	resDatas := []ResData{}
 	if user.Role == 1 {
 		for _, router := range routers {
@@ -85,13 +87,13 @@ type multiRouterInput struct {
 func getMultiRouters(c *gin.Context) {
 	inputs := multiRouterInput{}
 	if err := c.Bind(&inputs); err != nil {
-		c.JSON(http.StatusBadRequest, utils.ErrorRes(utils.BodyJsonDecodeError))
+		c.JSON(http.StatusBadRequest, utils.ErrorRes(utils.BodyJSONDecodeError))
 		return
 	}
 	routers, failedList := models.ReadMultiRouters(inputs.Ips)
 
-	x_api_key := c.Request.Header.Get("X-API-KEY")
-	user := utils.GetUserFromKey(x_api_key)
+	xAPIKey := c.Request.Header.Get("X-API-KEY")
+	user := utils.GetUserFromKey(xAPIKey)
 	var multiRouterRes MultiRouterRes
 	resDatas := []ResData{}
 	if user.Role == 1 {

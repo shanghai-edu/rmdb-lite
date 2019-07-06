@@ -39,7 +39,7 @@ func main() {
 	g.InitLog(g.Config().LogLevel)
 	g.InitDB()
 
-	srv := controller.InitGin(g.Config().Http.Listen)
+	srv := controller.InitGin(g.Config().HTTP.Listen)
 
 	go func() {
 		// service connections
@@ -48,7 +48,7 @@ func main() {
 		}
 	}()
 
-	quit := make(chan os.Signal)
+	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
 	<-quit
 	log.Println("Shutdown Server ...")

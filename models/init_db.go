@@ -3,16 +3,21 @@ package models
 import (
 	"encoding/csv"
 	"errors"
-
 	"os"
 
+	log "github.com/Sirupsen/logrus"
+
+	//引入 mysql 驱动
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
+
+	//引入 sqlite 驱动
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	"github.com/shanghai-edu/rmdb-lite/g"
 	"github.com/toolkits/file"
 )
 
+//Router 路由器的数据结构
 type Router struct {
 	gorm.Model
 	IP         string `gorm:"unique_index" json:"ip" binding:"required"`
@@ -56,16 +61,17 @@ func removeExistFile(f string) (err error) {
 	return
 }
 
+//InitData 初始化表结构
 func InitData(csvFile string) (err error) {
 	if g.Config().Sqlite != "" {
-		err = InitSqliteData(csvFile)
+		err = initSqliteData(csvFile)
 	} else {
-		err = InitMysqlData(csvFile)
+		err = initMysqlData(csvFile)
 	}
 	return
 }
 
-func InitSqliteData(csvFile string) (err error) {
+func initSqliteData(csvFile string) (err error) {
 	var routers []Router
 	dbFile := g.Config().Sqlite
 	err = removeExistFile(dbFile)
@@ -81,21 +87,28 @@ func InitSqliteData(csvFile string) (err error) {
 	if err != nil {
 		return
 	}
-	defer db.Close()
+	defer func() {
+		errr := db.Close()
+		if errr != nil {
+			log.Error(errr)
+		}
+	}()
 
 	db.CreateTable(&routers)
 	for _, router := range routers {
 		err = db.Create(&router).Error
 	}
 	if err != nil {
-		db.Close()
-		file.Remove(dbFile)
+		errr := file.Remove(dbFile)
+		if errr != nil {
+			log.Error(errr)
+		}
 		return
 	}
 	return
 }
 
-func InitMysqlData(csvFile string) (err error) {
+func initMysqlData(csvFile string) (err error) {
 	var routers []Router
 
 	routers, err = loadCsvData(csvFile)
@@ -107,7 +120,12 @@ func InitMysqlData(csvFile string) (err error) {
 	if err != nil {
 		return
 	}
-	defer db.Close()
+	defer func() {
+		errr := db.Close()
+		if errr != nil {
+			log.Error(errr)
+		}
+	}()
 
 	err = db.DropTableIfExists(&routers).Error
 	if err != nil {
@@ -119,7 +137,6 @@ func InitMysqlData(csvFile string) (err error) {
 		err = db.Create(&router).Error
 	}
 	if err != nil {
-		db.Close()
 		return
 	}
 	return

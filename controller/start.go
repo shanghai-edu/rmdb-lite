@@ -8,6 +8,7 @@ import (
 	"github.com/shanghai-edu/rmdb-lite/g"
 )
 
+//InitGin 初始化 Gin
 func InitGin(listen string) (httpServer *http.Server) {
 	if g.Config().LogLevel == "debug" {
 		gin.SetMode(gin.DebugMode)
@@ -27,12 +28,13 @@ func InitGin(listen string) (httpServer *http.Server) {
 	})
 	routes(r)
 	httpServer = &http.Server{
-		Addr:    g.Config().Http.Listen,
+		Addr:    g.Config().HTTP.Listen,
 		Handler: r,
 	}
 	return
 }
 
+//CORS CORS设置
 func CORS() gin.HandlerFunc {
 	return func(context *gin.Context) {
 		context.Writer.Header().Add("Access-Control-Allow-Origin", context.Request.Header.Get("Origin"))

@@ -20,13 +20,12 @@ func deleteRouter(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, utils.SuccessRes(nil))
-	return
 }
 
 func updateRouter(c *gin.Context) {
 	inputs := models.Router{}
 	if err := c.Bind(&inputs); err != nil {
-		c.JSON(http.StatusBadRequest, utils.ErrorRes(utils.BodyJsonDecodeError))
+		c.JSON(http.StatusBadRequest, utils.ErrorRes(utils.BodyJSONDecodeError))
 		return
 	}
 	err := models.UpdateRouter(inputs)
@@ -39,13 +38,12 @@ func updateRouter(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, utils.SuccessRes(nil))
-	return
 }
 
 func createRouter(c *gin.Context) {
 	inputs := models.Router{}
 	if err := c.Bind(&inputs); err != nil {
-		c.JSON(http.StatusBadRequest, utils.ErrorRes(utils.BodyJsonDecodeError))
+		c.JSON(http.StatusBadRequest, utils.ErrorRes(utils.BodyJSONDecodeError))
 		return
 	}
 	err := models.CreateRouter(inputs)
@@ -58,5 +56,4 @@ func createRouter(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, utils.SuccessRes(nil))
-	return
 }

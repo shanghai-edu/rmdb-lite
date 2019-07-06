@@ -2,6 +2,7 @@ package g
 
 import log "github.com/Sirupsen/logrus"
 
+//InitLog 初始化日志配置
 func InitLog(level string) {
 	switch level {
 	case "info":
