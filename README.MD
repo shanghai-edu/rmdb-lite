@@ -19,8 +19,8 @@ chmod +x control
 ```
 ##### 二进制安装
 ```
-wget https://github.com/shanghai-edu/rmdb-lite/releases/download/v0.1/rmdb-lite-0.2.0.tar.gz
-tar -xzvf rmdb-lite-0.2.0.tar.gz
+wget https://github.com/shanghai-edu/rmdb-lite/releases/download/v0.1/rmdb-lite-0.2.1.tar.gz
+tar -xzvf rmdb-lite-0.2.1.tar.gz
 ```
 
 #### 配置
@@ -69,27 +69,27 @@ role = 1
 ```
 # curl -H "X-API-KEY: 3a1179104ae0188ed4a3c100b38343ff" http://127.0.0.1:18080/api/v1/router?ip=192.25.209.100   
                                                                                                         
-{"code":0,"message":"ok","version":"0.1","data":{"ip":"192.25.209.100","node":"西宁","node_detail":""}}
+{"code":0,"message":"ok","version":"0.2.1","data":{"ip":"192.25.209.100","node":"西宁","node_detail":""}}
 ```
 
 role = 2
 ```
 # curl -H "X-API-KEY: 771261d709af69da179a330ed8f16fa1" http://127.0.0.1:18080/api/v1/router?ip=192.25.209.100
 
-{"code":0,"message":"ok","version":"0.1","data":{"ip":"192.25.209.100","node":"西宁","node_detail":"北京街I座"}}
+{"code":0,"message":"ok","version":"0.2,1","data":{"ip":"192.25.209.100","node":"西宁","node_detail":"北京街I座"}}
 ```
 ##### 多个 ip 查询
 role = 1
 ```
 # curl -X POST -d "{\"ips\":[\"192.25.209.100\",\"192.52.207.167\",\"192.76.5.75\"]}" -H "Content-type: application/json" -H "X-API-KEY: 3a1179104ae0188ed4a3c100b38343ff" http://127.0.0.1:18080/api/v1/router/multi    
 
-{"code":0,"message":"ok","version":"0.1","data":{"routers":[{"ip":"192.25.209.100","node":"西宁","node_detail":""},{"ip":"192.52.207.167","node":"天津","node_detail":""},{"ip":"192.76.5.75","node":"昆明","node_detail":""}],"failed_list":[]}}
+{"code":0,"message":"ok","version":"0.2.1","data":{"routers":[{"ip":"192.25.209.100","node":"西宁","node_detail":""},{"ip":"192.52.207.167","node":"天津","node_detail":""},{"ip":"192.76.5.75","node":"昆明","node_detail":""}],"failed_list":[]}}
 ```
 role = 2
 ```
 # curl -X POST -d "{\"ips\":[\"192.25.209.100\",\"192.52.207.167\",\"192.76.5.75\"]}" -H "Content-type: application/json" -H "X-API-KEY: 771261d709af69da179a330ed8f16fa1" http://127.0.0.1:18080/api/v1/router/multi
 
-{"code":0,"message":"ok","version":"0.1","data":{"routers":[{"ip":"192.25.209.100","node":"西宁","node_detail":"北京街I座"},{"ip":"192.52.207.167","node":"天津","node_detail":"李路n座"},{"ip":"192.76.5.75","node":"昆明","node_detail":"李路d座"}],"failed_list":[]}}
+{"code":0,"message":"ok","version":"0.2.1","data":{"routers":[{"ip":"192.25.209.100","node":"西宁","node_detail":"北京街I座"},{"ip":"192.52.207.167","node":"天津","node_detail":"李路n座"},{"ip":"192.76.5.75","node":"昆明","node_detail":"李路d座"}],"failed_list":[]}}
 ```
 ##### 读取所有节点
 需要 role = 3 权限
@@ -103,21 +103,21 @@ role = 2
 ```
 # curl -X DELETE -H "X-API-KEY: 771261d709af69da179a330ed8f16fa1" http://127.0.0.1:18080/api/v1/router?ip=192.25.209.100                                
 
-{"code":0,"message":"ok","version":"0.1","data":null}
+{"code":0,"message":"ok","version":"0.2.1","data":null}
 ```
 ##### 创建节点
 需要 role =3 权限
 ```
 # curl -X POST -d "{\"ip\":\"192.25.209.100\",\"node\": \"西宁\",\"node_detail\":\"北京街I座\"}" -H "Content-type: application/json" -H "X-API-KEY: 771261d709af69da179a330ed8f16fa1" http://127.0.0.1:18080/api/v1/router  
  
-{"code":0,"message":"ok","version":"0.1","data":null}  
+{"code":0,"message":"ok","version":"0.2.1","data":null}  
 ```
 ##### 更新节点
 需要 role = 3 权限
 ```
 # curl -X PUT -d "{\"ip\":\"192.25.209.100\",\"node\": \"西宁\",\"node_detail\":\"北京街I座\"}" -H "Content-type: application/json" -H "X-API-KEY: 771261d709af69da179a330ed8f16fa1" http://127.0.0.1:18080/api/v1/router   
 
-{"code":0,"message":"ok","version":"0.1","data":null}
+{"code":0,"message":"ok","version":"0.2.1","data":null}
 ```
 #### 性能（sqlite)
 ##### 查询性能
